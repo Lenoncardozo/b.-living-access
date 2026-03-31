@@ -92,17 +92,10 @@ const RSVPForm = forwardRef<HTMLDivElement>((_, ref) => {
         ...utm,
       };
 
-      // Try Supabase first
-      const { supabase } = await import("@/integrations/supabase/client").catch(() => ({ supabase: null }));
-      if (supabase) {
-        const { error } = await supabase.from("rsvps").insert([rsvp]);
-        if (error) throw error;
-      } else {
-        // Fallback to localStorage
-        const stored = JSON.parse(localStorage.getItem("rsvps") || "[]");
-        stored.push(rsvp);
-        localStorage.setItem("rsvps", JSON.stringify(stored));
-      }
+      // Store in localStorage (will be replaced with Supabase when Cloud is enabled)
+      const stored = JSON.parse(localStorage.getItem("rsvps") || "[]");
+      stored.push(rsvp);
+      localStorage.setItem("rsvps", JSON.stringify(stored));
 
       setState(form.attendance === "confirmed" ? "success-confirmed" : "success-declined");
     } catch (err) {
