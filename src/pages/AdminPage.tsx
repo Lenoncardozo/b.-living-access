@@ -145,55 +145,34 @@ function LoginView() {
 
   return (
     <main className="relative min-h-screen overflow-hidden bg-[linear-gradient(180deg,hsl(var(--navy-deep))_0%,hsl(var(--slate-luxe))_100%)] text-cream">
-      <div className="hero-grid-lines absolute inset-0 opacity-25" />
-      <div className="hero-grain absolute inset-0 opacity-60" />
-      <div className="pointer-events-none absolute inset-x-[-10%] top-16 h-56 beam-sweep bg-[linear-gradient(90deg,transparent,hsl(var(--gold)/0.18),transparent)] blur-3xl" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(214,181,118,0.08),transparent_30%)]" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,transparent,hsl(var(--gold)/0.24),transparent)]" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-[linear-gradient(90deg,transparent,rgba(255,248,240,0.08),transparent)]" />
 
       <motion.section
         initial={prefersReducedMotion ? false : { opacity: 0, y: 18 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-        className="relative mx-auto flex min-h-screen max-w-6xl items-center px-6 py-12 md:px-12"
+        className="relative mx-auto flex min-h-screen max-w-4xl items-center justify-center px-6 py-10 md:px-8"
       >
-        <div className="grid w-full gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
-          <div className="max-w-xl space-y-6">
-            <BrandLockup className="w-52 md:w-64" />
-            <p className="text-label-premium text-gold/76">Painel Interno</p>
-            <h1 className="headline-editorial text-5xl text-cream md:text-7xl">
-              Controle elegante para cada confirmação.
+        <div className="w-full max-w-[32rem] border border-white/14 bg-[linear-gradient(180deg,rgba(255,248,240,0.06),rgba(255,248,240,0.025))] p-6 shadow-[0_24px_60px_rgba(0,0,0,0.16)] backdrop-blur-sm md:p-8">
+          <div className="mb-8">
+            <p className="text-label-premium text-gold/70">Acesso protegido</p>
+            <h1 className="headline-editorial mt-4 text-left text-[35px] leading-[0.98] text-cream">
+              Entrar no dashboard
             </h1>
-            <p className="max-w-lg text-base leading-8 text-cream/72">
-              Acesse a visão consolidada da inauguração, acompanhe o ritmo das respostas e entre no detalhe
-              de cada convidado sem perder clareza.
-            </p>
-            <div className="editorial-panel max-w-md p-5">
-              <p className="text-label-premium text-gold/72">Evento monitorado</p>
-              <p className="mt-3 font-headline text-2xl text-cream">{EVENT_DETAILS.dateLabel}</p>
-              <p className="mt-2 text-sm leading-6 text-cream/68">
-                {EVENT_DETAILS.addressLine1}
-                <br />
-                {EVENT_DETAILS.addressLine2}
-                <br />
-                <span className="text-gold/80">{EVENT_DETAILS.referenceLabel}</span>
-              </p>
-            </div>
           </div>
 
-          <div className="editorial-panel max-w-xl justify-self-end p-7 md:p-10">
-            <div className="mb-10">
-              <p className="text-label-premium text-gold/72">Acesso protegido</p>
-              <h2 className="headline-editorial mt-4 text-4xl text-cream md:text-5xl">Entrar no dashboard</h2>
-            </div>
-
-            <form
-              className="space-y-7"
-              onSubmit={(event) => {
-                event.preventDefault();
-                loginMutation.mutate({ username, password });
-              }}
-            >
+          <form
+            className="space-y-6"
+            onSubmit={(event) => {
+              event.preventDefault();
+              loginMutation.mutate({ username, password });
+            }}
+          >
+            <div className="space-y-4">
               <div>
-                <label htmlFor="admin-username" className="mb-2 block text-label-premium text-gold/76">
+                <label htmlFor="admin-username" className="mb-2.5 block text-label-premium text-cream/84">
                   Login
                 </label>
                 <input
@@ -202,13 +181,13 @@ function LoginView() {
                   autoComplete="username"
                   value={username}
                   onChange={(event) => setUsername(event.target.value)}
-                  className="w-full border border-cream/22 bg-cream/[0.04] px-4 py-4 text-base text-cream outline-none transition-colors duration-300 placeholder:text-cream/42 focus:border-gold/50"
+                  className="w-full rounded-[0.2rem] border border-white/24 bg-[rgba(255,248,240,0.015)] px-5 py-4 text-lg text-cream outline-none transition-colors duration-300 placeholder:text-cream/38 focus:border-gold/48"
                   placeholder="admin"
                 />
               </div>
 
               <div>
-                <label htmlFor="admin-password" className="mb-2 block text-label-premium text-gold/76">
+                <label htmlFor="admin-password" className="mb-2.5 block text-label-premium text-cream/84">
                   Senha
                 </label>
                 <input
@@ -217,24 +196,24 @@ function LoginView() {
                   autoComplete="current-password"
                   value={password}
                   onChange={(event) => setPassword(event.target.value)}
-                  className="w-full border border-cream/22 bg-cream/[0.04] px-4 py-4 text-base text-cream outline-none transition-colors duration-300 placeholder:text-cream/42 focus:border-gold/50"
+                  className="w-full rounded-[0.2rem] border border-white/24 bg-[rgba(255,248,240,0.015)] px-5 py-4 text-lg text-cream outline-none transition-colors duration-300 placeholder:text-cream/38 focus:border-gold/48"
                   placeholder="Digite a senha"
                 />
               </div>
+            </div>
 
-              {loginMutation.isError ? (
-                <p className="text-sm text-[#f3b1b1]">
-                  {loginMutation.error instanceof Error
-                    ? loginMutation.error.message
-                    : "Não foi possível autenticar agora."}
-                </p>
-              ) : null}
+            {loginMutation.isError ? (
+              <p className="rounded-[0.2rem] border border-[#f3b1b1]/14 bg-[#f3b1b1]/6 px-4 py-3 text-sm text-[#f3b1b1]">
+                {loginMutation.error instanceof Error
+                  ? loginMutation.error.message
+                  : "Não foi possível autenticar agora."}
+              </p>
+            ) : null}
 
-              <button type="submit" disabled={loginMutation.isPending} className="button-editorial w-full">
-                {loginMutation.isPending ? "Entrando..." : "Acessar painel"}
-              </button>
-            </form>
-          </div>
+            <button type="submit" disabled={loginMutation.isPending} className="button-editorial w-full py-4">
+              {loginMutation.isPending ? "Entrando..." : "Acessar painel"}
+            </button>
+          </form>
         </div>
       </motion.section>
     </main>
