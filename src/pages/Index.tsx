@@ -1,9 +1,11 @@
 import { useRef } from "react";
-import HeroSection from "@/components/HeroSection";
+import HeroVariant from "@/components/HeroVariant";
 import ContextSection from "@/components/ContextSection";
 import EventInfoSection from "@/components/EventInfoSection";
 import LocationSection from "@/components/LocationSection";
 import RSVPForm from "@/components/RSVPForm";
+import InvitationFooter from "@/components/InvitationFooter";
+import heroArchitectural from "@/assets/hero-architectural.jpg";
 
 const Index = () => {
   const formRef = useRef<HTMLDivElement>(null);
@@ -14,18 +16,17 @@ const Index = () => {
 
   return (
     <main className="min-h-screen bg-background">
-      <HeroSection onCtaClick={scrollToForm} />
+      <HeroVariant
+        onCtaClick={scrollToForm}
+        backgroundImage={heroArchitectural}
+        bgPosition="center center"
+        overlayClass="from-navy-deep/80 via-navy-deep/50 to-navy-deep/40"
+      />
       <ContextSection />
       <EventInfoSection />
       <LocationSection />
       <RSVPForm ref={formRef} />
-
-      {/* Footer */}
-      <footer className="py-10 px-6 text-center">
-        <p className="text-xs text-muted-foreground/50 font-body tracking-wide">
-          © 2025 B. Living Floripa
-        </p>
-      </footer>
+      <InvitationFooter />
     </main>
   );
 };
