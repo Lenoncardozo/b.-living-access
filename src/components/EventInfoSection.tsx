@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Calendar, Clock, MapPin } from "lucide-react";
+import { EVENT_DETAILS } from "@/lib/invitation";
 
 const EventInfoSection = () => {
   return (
@@ -22,9 +23,9 @@ const EventInfoSection = () => {
 
           <div className="grid gap-0 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-border">
             {[
-              { icon: Calendar, label: "Data", value: "09 de Abril de 2025" },
-              { icon: Clock, label: "Horário", value: "18h" },
-              { icon: MapPin, label: "Local", value: "B. Living Floripa" },
+              { icon: Calendar, label: "Data", value: EVENT_DETAILS.dateLabel },
+              { icon: Clock, label: "Horário", value: `${EVENT_DETAILS.startTimeLabel} - ${EVENT_DETAILS.endTimeLabel}` },
+              { icon: MapPin, label: "Local", value: EVENT_DETAILS.referenceLabel },
             ].map(({ icon: Icon, label, value }) => (
               <div key={label} className="flex flex-col items-center text-center py-8 md:py-6 px-4">
                 <Icon className="w-4 h-4 text-gold-muted mb-4" strokeWidth={1.5} />

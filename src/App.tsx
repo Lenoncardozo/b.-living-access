@@ -4,8 +4,10 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Index from "./pages/Index.tsx";
-import InvitationPage from "./pages/InvitationPage.tsx";
-import HeroLab from "./pages/HeroLab.tsx";
+import NewInvitationPage from "./pages/NewInvitationPage.tsx";
+import AdminPage from "./pages/AdminPage.tsx";
+import ImInPage from "./pages/ImInPage.tsx";
+import ImOutPage from "./pages/ImOutPage.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
@@ -18,11 +20,10 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
-          <Route path="/hero-a" element={<InvitationPage version="a" />} />
-          <Route path="/hero-b" element={<InvitationPage version="b" />} />
-          <Route path="/hero-c" element={<InvitationPage version="c" />} />
-          <Route path="/hero-lab" element={<HeroLab />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          <Route path="/new" element={<NewInvitationPage />} />
+          <Route path="/admin" element={<AdminPage />} />
+          <Route path="/im-in" element={<ImInPage />} />
+          <Route path="/im-out" element={<ImOutPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

@@ -59,6 +59,9 @@ export default {
         taupe: "hsl(var(--taupe))",
         beige: "hsl(var(--beige))",
         cream: "hsl(var(--cream))",
+        "slate-luxe": "hsl(var(--slate-luxe))",
+        "slate-luxe-soft": "hsl(var(--slate-luxe-soft))",
+        "mist-luxe": "hsl(var(--mist-luxe))",
         gold: {
           DEFAULT: "hsl(var(--gold))",
           light: "hsl(var(--gold-light))",

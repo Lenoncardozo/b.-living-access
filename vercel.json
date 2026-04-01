@@ -1,0 +1,9 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "rewrites": [
+    {
+      "source": "/(new|admin|im-in|im-out)",
+      "destination": "/"
+    }
+  ]
+}

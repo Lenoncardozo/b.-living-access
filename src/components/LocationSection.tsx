@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import { MapPin, Car, ExternalLink } from "lucide-react";
-
-const GOOGLE_MAPS_URL = "https://www.google.com/maps/search/?api=1&query=Avenida+Mauro+Ramos+1494+Centro+Florianópolis+SC";
+import { EVENT_DETAILS, GOOGLE_MAPS_URL } from "@/lib/invitation";
 
 const LocationSection = () => {
   return (
@@ -28,13 +27,13 @@ const LocationSection = () => {
               <MapPin className="w-4 h-4 text-gold/60 mt-1 flex-shrink-0" strokeWidth={1.5} />
               <div>
                 <p className="text-sm text-cream/90 font-medium font-body">
-                  Avenida Mauro Ramos, 1494
+                  {EVENT_DETAILS.addressLine1}
                 </p>
                 <p className="text-sm text-cream/50 font-body">
-                  Centro, Florianópolis – SC, 88020-302
+                  {EVENT_DETAILS.addressLine2}
                 </p>
                 <p className="text-xs text-cream/30 font-body mt-1">
-                  Próximo à Beira-Mar, Pátio Milano e Majestic.
+                  {EVENT_DETAILS.referenceLabel}
                 </p>
               </div>
             </div>
