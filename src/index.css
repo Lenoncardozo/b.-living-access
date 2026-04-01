@@ -45,6 +45,10 @@
     --beige: 30 25% 93%;
     --cream: 30 40% 96%;
 
+    --gold: 38 45% 58%;
+    --gold-light: 38 35% 72%;
+    --gold-muted: 38 25% 48%;
+
     --font-headline: 'Cormorant Garamond', 'Georgia', serif;
     --font-body: 'DM Sans', 'Helvetica Neue', sans-serif;
 
@@ -84,6 +88,14 @@
     line-height: 1.15;
   }
 
+  .headline-invitation {
+    font-family: var(--font-headline);
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    line-height: 1.35;
+    text-transform: uppercase;
+  }
+
   .text-body-refined {
     font-family: var(--font-body);
     font-weight: 400;
@@ -91,19 +103,65 @@
     line-height: 1.65;
   }
 
+  .text-label-premium {
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: 0.6875rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+  }
+
   .divider-fine {
-    @apply w-12 h-px bg-accent mx-auto;
+    @apply w-12 h-px mx-auto;
+    background-color: hsl(var(--accent));
+  }
+
+  .divider-gold {
+    @apply w-16 mx-auto;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      hsl(var(--gold) / 0.6),
+      transparent
+    );
+  }
+
+  .rule-gold {
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      hsl(var(--gold) / 0.4),
+      hsl(var(--gold) / 0.4),
+      transparent
+    );
   }
 
   .btn-primary-premium {
-    @apply inline-flex items-center justify-center px-8 py-3.5 text-sm font-medium tracking-widest uppercase transition-all duration-300;
+    @apply inline-flex items-center justify-center px-10 py-4 text-xs font-medium tracking-widest uppercase transition-all duration-300;
     font-family: var(--font-body);
-    background-color: hsl(var(--navy));
+    background-color: hsl(var(--gold) / 0.15);
     color: hsl(var(--cream));
-    letter-spacing: 0.15em;
+    border: 1px solid hsl(var(--gold) / 0.35);
+    letter-spacing: 0.2em;
+    backdrop-filter: blur(8px);
   }
 
   .btn-primary-premium:hover {
+    background-color: hsl(var(--gold) / 0.25);
+    border-color: hsl(var(--gold) / 0.5);
+  }
+
+  .btn-primary-solid {
+    @apply inline-flex items-center justify-center px-10 py-4 text-xs font-medium tracking-widest uppercase transition-all duration-300;
+    font-family: var(--font-body);
+    background-color: hsl(var(--navy));
+    color: hsl(var(--cream));
+    letter-spacing: 0.2em;
+  }
+
+  .btn-primary-solid:hover {
     background-color: hsl(var(--navy-deep));
   }
 
@@ -111,28 +169,47 @@
     @apply inline-flex items-center justify-center px-6 py-3 text-xs font-medium tracking-widest uppercase transition-all duration-300 border;
     font-family: var(--font-body);
     color: hsl(var(--navy));
-    border-color: hsl(var(--navy) / 0.25);
+    border-color: hsl(var(--navy) / 0.2);
     letter-spacing: 0.15em;
   }
 
   .btn-secondary-premium:hover {
     background-color: hsl(var(--navy) / 0.05);
-    border-color: hsl(var(--navy) / 0.4);
+    border-color: hsl(var(--navy) / 0.35);
   }
 
   .input-premium {
-    @apply w-full px-0 py-3 text-sm bg-transparent border-0 border-b transition-colors duration-300 outline-none;
+    @apply w-full px-0 py-3.5 text-sm bg-transparent border-0 border-b transition-colors duration-300 outline-none;
     font-family: var(--font-body);
     border-bottom-color: hsl(var(--navy) / 0.15);
     color: hsl(var(--foreground));
   }
 
   .input-premium::placeholder {
-    color: hsl(var(--muted-foreground));
+    color: hsl(var(--muted-foreground) / 0.7);
     font-weight: 300;
+    letter-spacing: 0.03em;
   }
 
   .input-premium:focus {
     border-bottom-color: hsl(var(--navy) / 0.5);
+  }
+
+  /* Dark section inputs */
+  .input-premium-dark {
+    @apply w-full px-0 py-3.5 text-sm bg-transparent border-0 border-b transition-colors duration-300 outline-none;
+    font-family: var(--font-body);
+    border-bottom-color: hsl(var(--cream) / 0.15);
+    color: hsl(var(--cream));
+  }
+
+  .input-premium-dark::placeholder {
+    color: hsl(var(--cream) / 0.4);
+    font-weight: 300;
+    letter-spacing: 0.03em;
+  }
+
+  .input-premium-dark:focus {
+    border-bottom-color: hsl(var(--gold) / 0.5);
   }
 }

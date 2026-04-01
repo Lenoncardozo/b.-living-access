@@ -1,4 +1,4 @@
-import { useState, useEffect, forwardRef } from "react";
+import { useState, forwardRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Calendar, MapPin, Check, Heart } from "lucide-react";
 
@@ -24,7 +24,6 @@ function generateGoogleCalendarUrl() {
   const title = encodeURIComponent("Inauguração B. Living Floripa");
   const location = encodeURIComponent("Avenida Mauro Ramos, 1494, Centro, Florianópolis - SC - 88020-302");
   const details = encodeURIComponent("Inauguração da nova casa da B. Living em Florianópolis.");
-  // April 9, 2025 at 18:00 BRT (UTC-3) = 21:00 UTC
   const dates = "20250409T210000Z/20250409T230000Z";
   return `https://www.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${dates}&location=${location}&details=${details}`;
 }
@@ -58,6 +57,71 @@ function validateWhatsApp(wpp: string): boolean {
 
 type FormState = "idle" | "loading" | "success-confirmed" | "success-declined" | "error";
 
+const SuccessConfirmed = ({ ref: sectionRef }: { ref: React.Ref<HTMLDivElement> }) => (
+  <section ref={sectionRef} className="py-24 md:py-32 px-6 md:px-12 lg:px-20 bg-navy-deep">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8 }}
+      className="max-w-md mx-auto text-center"
+    >
+      <div className="w-12 h-12 rounded-full border border-gold/30 flex items-center justify-center mx-auto mb-8">
+        <Check className="w-5 h-5 text-gold" strokeWidth={1.5} />
+      </div>
+      <h3 className="headline-editorial text-2xl md:text-3xl text-cream mb-4">
+        Presença confirmada.
+      </h3>
+      <p className="text-body-refined text-cream/50 text-sm mb-12">
+        Agradecemos a confirmação. Será um prazer recebê-lo na inauguração da B. Living Floripa.
+      </p>
+      <div className="flex flex-col sm:flex-row gap-3 justify-center">
+        <a
+          href={generateGoogleCalendarUrl()}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center justify-center gap-2 px-6 py-3 text-xs font-medium tracking-widest uppercase transition-all duration-300 border font-body text-gold/80 border-gold/20 hover:border-gold/40 hover:bg-gold/5"
+          style={{ letterSpacing: "0.15em" }}
+        >
+          <Calendar className="w-3.5 h-3.5" strokeWidth={1.5} />
+          Adicionar ao calendário
+        </a>
+        <a
+          href={GOOGLE_MAPS_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center justify-center gap-2 px-6 py-3 text-xs font-medium tracking-widest uppercase transition-all duration-300 border font-body text-gold/80 border-gold/20 hover:border-gold/40 hover:bg-gold/5"
+          style={{ letterSpacing: "0.15em" }}
+        >
+          <MapPin className="w-3.5 h-3.5" strokeWidth={1.5} />
+          Abrir localização
+        </a>
+      </div>
+    </motion.div>
+  </section>
+);
+
+const SuccessDeclined = ({ ref: sectionRef }: { ref: React.Ref<HTMLDivElement> }) => (
+  <section ref={sectionRef} className="py-24 md:py-32 px-6 md:px-12 lg:px-20 bg-navy-deep">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8 }}
+      className="max-w-md mx-auto text-center"
+    >
+      <div className="w-12 h-12 rounded-full border border-gold/30 flex items-center justify-center mx-auto mb-8">
+        <Heart className="w-5 h-5 text-gold" strokeWidth={1.5} />
+      </div>
+      <h3 className="headline-editorial text-2xl md:text-3xl text-cream mb-4">
+        Agradecemos o retorno.
+      </h3>
+      <p className="text-body-refined text-cream/50 text-sm">
+        Sentiremos sua falta, mas ficamos gratos pela gentileza de nos avisar.
+        Esperamos vê-lo em breve.
+      </p>
+    </motion.div>
+  </section>
+);
+
 const RSVPForm = forwardRef<HTMLDivElement>((_, ref) => {
   const [form, setForm] = useState<RSVPData>({ name: "", whatsapp: "", email: "", attendance: "" });
   const [state, setState] = useState<FormState>("idle");
@@ -81,7 +145,6 @@ const RSVPForm = forwardRef<HTMLDivElement>((_, ref) => {
     const utm = getUTMParams();
 
     try {
-      // Store in localStorage as fallback until DB is connected
       const rsvp = {
         id: crypto.randomUUID(),
         name: form.name.trim(),
@@ -92,7 +155,6 @@ const RSVPForm = forwardRef<HTMLDivElement>((_, ref) => {
         ...utm,
       };
 
-      // Store in localStorage (will be replaced with Supabase when Cloud is enabled)
       const stored = JSON.parse(localStorage.getItem("rsvps") || "[]");
       stored.push(rsvp);
       localStorage.setItem("rsvps", JSON.stringify(stored));
@@ -104,75 +166,11 @@ const RSVPForm = forwardRef<HTMLDivElement>((_, ref) => {
     }
   };
 
-  if (state === "success-confirmed") {
-    return (
-      <section ref={ref} className="py-20 md:py-28 px-6 md:px-12 lg:px-20 bg-sand-warm/50">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="max-w-md mx-auto text-center"
-        >
-          <div className="w-12 h-12 rounded-full bg-navy/10 flex items-center justify-center mx-auto mb-6">
-            <Check className="w-5 h-5 text-navy" strokeWidth={1.5} />
-          </div>
-          <h3 className="headline-editorial text-2xl md:text-3xl text-foreground mb-4">
-            Presença confirmada.
-          </h3>
-          <p className="text-body-refined text-muted-foreground text-sm mb-10">
-            Agradecemos a confirmação. Será um prazer recebê-lo na inauguração da B. Living Floripa.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <a
-              href={generateGoogleCalendarUrl()}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-secondary-premium gap-2"
-            >
-              <Calendar className="w-3.5 h-3.5" strokeWidth={1.5} />
-              Adicionar ao calendário
-            </a>
-            <a
-              href={GOOGLE_MAPS_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-secondary-premium gap-2"
-            >
-              <MapPin className="w-3.5 h-3.5" strokeWidth={1.5} />
-              Abrir localização
-            </a>
-          </div>
-        </motion.div>
-      </section>
-    );
-  }
-
-  if (state === "success-declined") {
-    return (
-      <section ref={ref} className="py-20 md:py-28 px-6 md:px-12 lg:px-20 bg-sand-warm/50">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="max-w-md mx-auto text-center"
-        >
-          <div className="w-12 h-12 rounded-full bg-navy/10 flex items-center justify-center mx-auto mb-6">
-            <Heart className="w-5 h-5 text-navy" strokeWidth={1.5} />
-          </div>
-          <h3 className="headline-editorial text-2xl md:text-3xl text-foreground mb-4">
-            Agradecemos o retorno.
-          </h3>
-          <p className="text-body-refined text-muted-foreground text-sm">
-            Sentiremos sua falta, mas ficamos gratos pela gentileza de nos avisar.
-            Esperamos vê-lo em breve.
-          </p>
-        </motion.div>
-      </section>
-    );
-  }
+  if (state === "success-confirmed") return <SuccessConfirmed ref={ref} />;
+  if (state === "success-declined") return <SuccessDeclined ref={ref} />;
 
   return (
-    <section ref={ref} className="py-20 md:py-28 px-6 md:px-12 lg:px-20 bg-sand-warm/50">
+    <section ref={ref} className="py-24 md:py-32 px-6 md:px-12 lg:px-20 bg-sand-warm/50">
       <div className="max-w-md mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -180,12 +178,16 @@ const RSVPForm = forwardRef<HTMLDivElement>((_, ref) => {
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.8 }}
         >
-          <h2 className="headline-editorial text-2xl md:text-3xl text-foreground text-center mb-3">
-            Confirme sua presença
-          </h2>
-          <p className="text-body-refined text-muted-foreground text-sm text-center mb-12">
-            Preencha seus dados abaixo para confirmar.
-          </p>
+          <div className="text-center mb-14 space-y-4">
+            <p className="text-label-premium text-navy-light/50">RSVP</p>
+            <h2 className="headline-editorial text-2xl md:text-3xl text-foreground">
+              Confirme sua presença
+            </h2>
+            <div className="divider-fine" />
+            <p className="text-body-refined text-muted-foreground text-sm pt-2">
+              Será um prazer receber você para este encontro.
+            </p>
+          </div>
 
           <form onSubmit={handleSubmit} className="space-y-8">
             {/* Name */}
@@ -228,60 +230,39 @@ const RSVPForm = forwardRef<HTMLDivElement>((_, ref) => {
             </div>
 
             {/* Attendance */}
-            <div className="space-y-3 pt-2">
-              <label
-                className={`flex items-center gap-3 p-4 border cursor-pointer transition-all duration-300 ${
-                  form.attendance === "confirmed"
-                    ? "border-navy/30 bg-navy/5"
-                    : "border-border hover:border-navy/15"
-                }`}
-              >
-                <input
-                  type="radio"
-                  name="attendance"
-                  value="confirmed"
-                  checked={form.attendance === "confirmed"}
-                  onChange={() => setForm({ ...form, attendance: "confirmed" })}
-                  className="sr-only"
-                />
-                <div
-                  className={`w-4 h-4 rounded-full border-2 flex items-center justify-center transition-colors ${
-                    form.attendance === "confirmed" ? "border-navy" : "border-muted-foreground/30"
+            <div className="space-y-3 pt-4">
+              {[
+                { value: "confirmed" as const, label: "Confirmo minha presença" },
+                { value: "declined" as const, label: "Não poderei comparecer" },
+              ].map(({ value, label }) => (
+                <label
+                  key={value}
+                  className={`flex items-center gap-3 p-4 border cursor-pointer transition-all duration-300 ${
+                    form.attendance === value
+                      ? "border-navy/30 bg-navy/5"
+                      : "border-border hover:border-navy/15"
                   }`}
                 >
-                  {form.attendance === "confirmed" && (
-                    <div className="w-2 h-2 rounded-full bg-navy" />
-                  )}
-                </div>
-                <span className="text-sm font-body text-foreground">Confirmo minha presença</span>
-              </label>
-
-              <label
-                className={`flex items-center gap-3 p-4 border cursor-pointer transition-all duration-300 ${
-                  form.attendance === "declined"
-                    ? "border-navy/30 bg-navy/5"
-                    : "border-border hover:border-navy/15"
-                }`}
-              >
-                <input
-                  type="radio"
-                  name="attendance"
-                  value="declined"
-                  checked={form.attendance === "declined"}
-                  onChange={() => setForm({ ...form, attendance: "declined" })}
-                  className="sr-only"
-                />
-                <div
-                  className={`w-4 h-4 rounded-full border-2 flex items-center justify-center transition-colors ${
-                    form.attendance === "declined" ? "border-navy" : "border-muted-foreground/30"
-                  }`}
-                >
-                  {form.attendance === "declined" && (
-                    <div className="w-2 h-2 rounded-full bg-navy" />
-                  )}
-                </div>
-                <span className="text-sm font-body text-foreground">Não poderei comparecer</span>
-              </label>
+                  <input
+                    type="radio"
+                    name="attendance"
+                    value={value}
+                    checked={form.attendance === value}
+                    onChange={() => setForm({ ...form, attendance: value })}
+                    className="sr-only"
+                  />
+                  <div
+                    className={`w-4 h-4 rounded-full border-2 flex items-center justify-center transition-colors ${
+                      form.attendance === value ? "border-navy" : "border-muted-foreground/30"
+                    }`}
+                  >
+                    {form.attendance === value && (
+                      <div className="w-2 h-2 rounded-full bg-navy" />
+                    )}
+                  </div>
+                  <span className="text-sm font-body text-foreground">{label}</span>
+                </label>
+              ))}
               {errors.attendance && <p className="text-xs text-destructive mt-1 font-body">{errors.attendance}</p>}
             </div>
 
@@ -300,11 +281,11 @@ const RSVPForm = forwardRef<HTMLDivElement>((_, ref) => {
             </AnimatePresence>
 
             {/* Submit */}
-            <div className="pt-4">
+            <div className="pt-6">
               <button
                 type="submit"
                 disabled={state === "loading"}
-                className="btn-primary-premium w-full disabled:opacity-50"
+                className="btn-primary-solid w-full disabled:opacity-50"
               >
                 {state === "loading" ? "Enviando..." : "Confirmar presença"}
               </button>

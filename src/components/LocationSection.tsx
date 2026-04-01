@@ -5,7 +5,7 @@ const GOOGLE_MAPS_URL = "https://www.google.com/maps/search/?api=1&query=Avenida
 
 const LocationSection = () => {
   return (
-    <section className="py-16 md:py-24 px-6 md:px-12 lg:px-20">
+    <section className="py-20 md:py-28 px-6 md:px-12 lg:px-20 bg-navy-deep">
       <div className="max-w-2xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -14,22 +14,26 @@ const LocationSection = () => {
           transition={{ duration: 0.8 }}
           className="space-y-10"
         >
-          <h2 className="headline-editorial text-2xl md:text-3xl text-foreground text-center">
-            Como chegar
-          </h2>
+          <div className="text-center space-y-4">
+            <p className="text-label-premium text-gold/50">Localização</p>
+            <h2 className="headline-editorial text-2xl md:text-3xl text-cream">
+              Como chegar
+            </h2>
+            <div className="divider-gold mt-4" />
+          </div>
 
           <div className="space-y-6">
             {/* Address */}
             <div className="flex gap-4 items-start">
-              <MapPin className="w-4 h-4 text-navy-light mt-1 flex-shrink-0" strokeWidth={1.5} />
+              <MapPin className="w-4 h-4 text-gold/60 mt-1 flex-shrink-0" strokeWidth={1.5} />
               <div>
-                <p className="text-sm text-foreground font-medium font-body">
+                <p className="text-sm text-cream/90 font-medium font-body">
                   Avenida Mauro Ramos, 1494
                 </p>
-                <p className="text-sm text-muted-foreground font-body">
+                <p className="text-sm text-cream/50 font-body">
                   Centro, Florianópolis – SC, 88020-302
                 </p>
-                <p className="text-xs text-muted-foreground/70 font-body mt-1">
+                <p className="text-xs text-cream/30 font-body mt-1">
                   Próximo à Beira-Mar, Pátio Milano e Majestic.
                 </p>
               </div>
@@ -37,10 +41,10 @@ const LocationSection = () => {
 
             {/* Parking */}
             <div className="flex gap-4 items-start">
-              <Car className="w-4 h-4 text-navy-light mt-1 flex-shrink-0" strokeWidth={1.5} />
+              <Car className="w-4 h-4 text-gold/60 mt-1 flex-shrink-0" strokeWidth={1.5} />
               <div>
-                <p className="text-sm text-foreground font-medium font-body">Estacionamento</p>
-                <p className="text-sm text-muted-foreground font-body">
+                <p className="text-sm text-cream/90 font-medium font-body">Estacionamento</p>
+                <p className="text-sm text-cream/50 font-body">
                   Recomendamos o estacionamento do Pátio Milano.
                 </p>
               </div>
@@ -48,12 +52,13 @@ const LocationSection = () => {
           </div>
 
           {/* Maps button */}
-          <div className="text-center pt-2">
+          <div className="text-center pt-4">
             <a
               href={GOOGLE_MAPS_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-secondary-premium inline-flex gap-2"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 text-xs font-medium tracking-widest uppercase transition-all duration-300 border font-body text-gold/80 border-gold/20 hover:border-gold/40 hover:bg-gold/5"
+              style={{ letterSpacing: "0.15em" }}
             >
               Abrir no Google Maps
               <ExternalLink className="w-3.5 h-3.5" strokeWidth={1.5} />
